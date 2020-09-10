@@ -313,10 +313,12 @@ class Client(EnumEnforcer):
         %7BaccountId%7D/orders-0>`__. '''
         if isinstance(order_spec, OrderBuilder):
             order_spec = order_spec.build()
-
-        path = '/v1/accounts/{}/orders'.format(account_id)
-        return self.__post_request(path, order_spec)
-
+            path = '/v1/accounts/{}/orders'.format(account_id)
+            return self.__post_request(path, order_spec)
+        else:
+            error_str = "Please use an order builder to create the order_spec argument."
+            raise UserWarning(error_str)
+            
     def replace_order(self, account_id, order_id, order_spec):
         '''Replace an existing order for an account. The existing order will be
         replaced by the new order. Once replaced, the old order will be canceled
